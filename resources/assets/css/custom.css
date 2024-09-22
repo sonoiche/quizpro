@@ -1,0 +1,36 @@
+.dt-bootstrap5 {
+    margin: 15px !important;
+}
+.dataTables_filter {
+    width: 20%;
+    float: right;
+}
+.dataTables_filter > label {
+    display: flex;
+    align-items: center;
+}
+.dataTables_filter > label > input {
+    margin-left: 10px;
+    border-radius: 5px;
+}
+.dataTables_info {
+    float: left;
+    display: flex;
+    align-items: center;
+    margin-top: 15px !important;
+    margin-bottom: 15px;
+}
+.dataTables_paginate {
+    float: right;
+    display: flex;
+    align-items: center;
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
+}
+.dataTable {
+    margin-top: 15px !important;
+}
+.dataTables_empty {
+    text-align: center;
+    font-weight: bold;
+}
