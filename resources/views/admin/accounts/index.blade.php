@@ -39,7 +39,7 @@
                                 <div class="col-md-6 col-sm-12 mb-3">
                                     <div class="form-group">
                                         <label for="role" class="form-label">Role</label>
-                                        <select name="role" id="role" class="form-select rounded-1 py-2">
+                                        <select name="role" id="role" class="form-select rounded-1 py-2" {{ (auth()->user()->role !== 'Admin') ? 'disabled' : '' }}>
                                             <option value="">Select Role</option>
                                             <option value="Admin" {{ (isset($user->role) && $user->role == 'Admin') ? 'selected' : '' }}>Admin</option>
                                             <option value="Teacher" {{ (isset($user->role) && $user->role == 'Teacher') ? 'selected' : '' }}>Teacher</option>

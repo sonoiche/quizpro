@@ -13,9 +13,8 @@
                             </div>
                         @endif
                         <div class="mb-3 d-flex justify-content-center">
-                            <a href="{{ url('/') }}">
-                                <img src="{{ url('assets/images/brand-logos/desktop-logo.png') }}" alt="logo" class="desktop-logo">
-                                <img src="{{ url('assets/images/brand-logos/desktop-dark.png') }}" alt="logo" class="desktop-dark">
+                            <a href="{{ url('/') }}" class="text-center">
+                                <img src="{{ url('logo1.png') }}" alt="logo" style="width: 40%">
                             </a>
                         </div>
                         <p class="h5 mb-2 text-center">Reset Password</p>
