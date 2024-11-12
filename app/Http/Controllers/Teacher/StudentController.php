@@ -16,9 +16,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $user_id          = auth()->user()->id;
-        $data['students'] = User::where('role', User::ROLE_STUDENT)->orderBy('fname')->get();
-        $data['sections'] = Classroom::where('instructor_id', $user_id)->orderBy('name')->get();
+        $user_id            = auth()->user()->id;
+        $data['students']   = User::where('role', User::ROLE_STUDENT)->orderBy('fname')->get();
+        $data['sections']   = Classroom::where('instructor_id', $user_id)->orderBy('name')->get();
         return view('teacher.students.index', $data);
     }
 

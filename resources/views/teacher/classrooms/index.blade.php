@@ -36,4 +36,18 @@
 <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
 <script src="{{ url('vendor/datatables/buttons.server-side.js') }}"></script>
 {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+<script>
+function deleteClassroom(id) {
+    if(confirm('Are you sure you want to delete this?')) {
+        $.ajax({
+            type: "DELETE",
+            url: "{{ url('teacher/classrooms') }}/" + id,
+            dataType: "json",
+            success: function (response) {
+                location.reload();
+            }
+        });
+    }
+}
+</script>
 @endpush

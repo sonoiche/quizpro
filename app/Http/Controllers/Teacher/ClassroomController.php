@@ -63,6 +63,7 @@ class ClassroomController extends Controller
      */
     public function edit(string $id)
     {
+        $data['sections'] = Section::orderBy('name')->get();
         $data['classroom'] = Classroom::find($id);
         return view('teacher.classrooms.edit', $data);
     }

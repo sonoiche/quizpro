@@ -17,7 +17,7 @@
                                 <div class="col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <div class="d-flex justify-content-end">
-                                            <a href="{{ url('student/accounts') }}" class="btn btn-outline-danger me-2">Back</a>
+                                            <a href="{{ url('home') }}" class="btn btn-outline-danger me-2">Back</a>
                                             <button type="submit" class="btn btn-primary">Save Changes</button>
                                             <input type="hidden" name="id" value="{{ $student->id }}" />
                                         </div>
@@ -35,4 +35,23 @@
 
 @push('scripts')
 {!! JsValidator::formRequest('App\Http\Requests\Student\UserRequest') !!}
+<script>
+$(document).ready(function () {
+    $('#year_level').change(function (e) { 
+        e.preventDefault();
+        var year_level = $(this).val();
+        $.ajax({
+            type: "GET",
+            url: "{{ url('student/accounts') }}/" + year_level,
+            dataType: "json",
+            success: function (response) {
+                $('#section').empty().append('<option value="">Select Section</option>');
+                response.sections.forEach(section => {
+                    $('#section').append(`<option value="${section.name}">${section.name}</option>`);
+                });
+            }
+        });
+    });
+});
+</script>
 @endpush

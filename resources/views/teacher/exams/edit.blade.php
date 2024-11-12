@@ -6,7 +6,7 @@
             <div class="col-md-6 col-xl-6 col-xxl-6">
                 <div class="card custom-card overflow-hidden">
                     <div class="card-header justify-content-between">
-                        <div class="card-title">Update Examination</div>
+                        <div class="card-title">Update Assessment Test</div>
                     </div>
                     <div class="card-body p-3">
                         <form action="{{ url('teacher/exams', $exam->id) }}" method="post" enctype="multipart/form-data">

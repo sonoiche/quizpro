@@ -64,7 +64,7 @@ class SectionDataTable extends DataTable
     {
         return [
             Column::make(['data' => 'name', 'title' => 'Section Name']),
-            Column::make(['data' => 'college_year', 'title' => 'College Year']),
+            Column::make(['data' => 'college_year', 'title' => 'Year Level']),
             Column::make(['data' => 'status', 'title' => 'Status']),
             Column::make(['data' => 'created_at', 'title' => 'Created Date']),
             Column::computed('action')

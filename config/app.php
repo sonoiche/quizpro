@@ -124,6 +124,6 @@ return [
     ],
 
     'college_years' => [
-        'First Year', 'Second Year', 'Third Year', 'Forth Year'
+        'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10'
     ]
 ];

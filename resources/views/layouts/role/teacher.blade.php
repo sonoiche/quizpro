@@ -46,18 +46,18 @@
                 <li class="slide has-sub">
                     <a href="javascript:void(0);" class="side-menu__item">
                         <i class="bi bi-card-checklist side-menu__icon"></i>
-                        <span class="side-menu__label">Manage Exams</span>
+                        <span class="side-menu__label">Manage Tests</span>
                         <i class="fe fe-chevron-right side-menu__angle"></i>
                     </a>
                     <ul class="slide-menu child1 pages-ul">
                         <li class="slide side-menu__label1">
-                            <a href="javascript:void(0)">Manage Exams</a>
+                            <a href="javascript:void(0)">Manage Tests</a>
                         </li>
                         <li class="slide">
-                            <a href="{{ url('teacher/exams') }}" class="side-menu__item">List of Exams</a>
+                            <a href="{{ url('teacher/exams') }}" class="side-menu__item">List of Tests</a>
                         </li>
                         <li class="slide">
-                            <a href="{{ url('teacher/exams/create') }}" class="side-menu__item">Create Exam</a>
+                            <a href="{{ url('teacher/exams/create') }}" class="side-menu__item">Create Test</a>
                         </li>
                     </ul>
                 </li>

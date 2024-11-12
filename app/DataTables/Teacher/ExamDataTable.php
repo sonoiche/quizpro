@@ -3,6 +3,7 @@
 namespace App\DataTables\Teacher;
 
 use App\Models\Admin\Section;
+use App\Models\Teacher\Classroom;
 use App\Models\Teacher\Exam;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -50,7 +51,9 @@ class ExamDataTable extends DataTable
      */
     public function query(Exam $model): QueryBuilder
     {
-        return $model->newQuery();
+        $user_id = auth()->user()->id;
+        $classroom_ids = Classroom::where('instructor_id', $user_id)->pluck('id');
+        return $model->whereIn('classroom_id', $classroom_ids);
     }
 
     /**

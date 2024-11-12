@@ -31,4 +31,10 @@ class UserController extends Controller
 
         return redirect()->to('home')->with('success', 'Student information has been updated.');
     }
+
+    public function show($year_level)
+    {
+        $data['sections'] = Section::where('college_year', $year_level)->get();
+        return response()->json($data);
+    }
 }

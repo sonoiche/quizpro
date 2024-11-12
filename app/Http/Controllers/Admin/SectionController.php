@@ -61,7 +61,7 @@ class SectionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(SectionRequest $request, string $id)
     {
         $section = Section::find($id);
         $section->name          = $request['name'];

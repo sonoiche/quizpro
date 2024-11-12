@@ -10,7 +10,7 @@
         <select name="section" id="section" class="form-select">
             <option value="">Select Section</option>
             @foreach ($sections as $section)
-            <option value="{{ $section->name }}">{{ $section->name }}</option>
+            <option value="{{ $section->name }}" {{ (isset($classroom->section) && $classroom->section == $section->name) ? 'selected' : '' }}>{{ $section->name }}</option>
             @endforeach
         </select>
     </div>

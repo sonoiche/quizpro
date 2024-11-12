@@ -6,9 +6,9 @@
 </div>
 <div class="col-md-6 col-sm-12 mb-3">
     <div class="form-group">
-        <label for="college_year" class="form-label">College Year</label>
+        <label for="college_year" class="form-label">Year Level</label>
         <select name="college_year" id="college_year" class="form-select">
-            <option value="">Select College Year</option>
+            <option value="">Select Year Level</option>
             @foreach (config('app.college_years') as $college_year)
             <option value="{{ $college_year }}" {{ (isset($section->college_year) && $section->college_year == $college_year) ? 'selected' : '' }}>{{ $college_year }}</option>
             @endforeach

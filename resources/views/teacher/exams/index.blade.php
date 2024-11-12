@@ -6,9 +6,9 @@
             <div class="col-md-12 col-xl-12 col-xxl-12">
                 <div class="card custom-card overflow-hidden">
                     <div class="card-header justify-content-between">
-                        <div class="card-title">Manage Examinations</div>
+                        <div class="card-title">Manage Assessment Test</div>
                         <div class="dropdown">
-                            <a href="{{ url('teacher/exams/create') }}" class="btn btn-outline-primary">Create Exam</a>
+                            <a href="{{ url('teacher/exams/create') }}" class="btn btn-outline-primary">Create Test</a>
                         </div>
                     </div>
                     <div class="card-body p-0">
@@ -38,7 +38,7 @@
 {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
 <script>
 function deleteExam(id) {
-    if(confirm('Are you sure you want to delete this examination?')) {
+    if(confirm('Are you sure you want to delete this assessment test?')) {
         $.ajax({
             type: "DELETE",
             url: "{{ url('teacher/exams') }}" + id,
