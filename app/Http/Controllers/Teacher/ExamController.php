@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Teacher;
 use App\Models\Teacher\Exam;
 use Illuminate\Http\Request;
 use Smalot\PdfParser\Parser;
+use PhpOffice\PhpWord\IOFactory;
 use App\Models\Teacher\Classroom;
 use OpenAI\Laravel\Facades\OpenAI;
 use App\Http\Controllers\Controller;
+use App\Models\Teacher\ExamQuestion;
 use App\DataTables\Teacher\ExamDataTable;
 use App\Http\Requests\Teacher\ExamRequest;
-use App\Models\Teacher\ExamQuestion;
 
 class ExamController extends Controller
 {
@@ -40,10 +41,30 @@ class ExamController extends Controller
     public function store(ExamRequest $request)
     {
         if($request->has('document_file')) {
+            $content    = '';
             $file       = $request->file('document_file');
-            $parser     = new Parser();
-            $pdf        = $parser->parseFile($file);
-            $content    = $pdf->getText();
+            $extension  = $file->getClientOriginalExtension();
+
+            if($extension == 'pdf') {
+                $parser     = new Parser();
+                $pdf        = $parser->parseFile($file);
+                $content    = $pdf->getText();
+            }
+
+            if(in_array($extension, ['docx','doc'])) {
+                $path       = $request->file('document_file')->store('uploads');
+                $filePath   = storage_path('app/' . $path);
+                $phpWord    = IOFactory::load($filePath);
+
+                // Extract text
+                foreach ($phpWord->getSections() as $section) {
+                    foreach ($section->getElements() as $element) {
+                        if (method_exists($element, 'getText')) {
+                            $content .= $element->getText() . "\n";
+                        }
+                    }
+                }
+            }
         }
 
         $exam = new Exam();

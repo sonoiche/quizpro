@@ -24,7 +24,7 @@ class ExamRequest extends FormRequest
         return [
             'name'              => 'required',
             'items'             => 'required|numeric',
-            'document_file'     => 'nullable|mimes:pdf'
+            'document_file'     => 'nullable|mimes:pdf,docx'
         ];
     }
 
