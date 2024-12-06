@@ -73,6 +73,7 @@ class ExamController extends Controller
         $exam->items                    = $request['items'];
         $exam->content                  = $content;
         $exam->passing_grade            = $request['passing_grade'];
+        $exam->test_type                = $request['test_type'];
         $exam->display_student_score    = $request['display_student_score'];
         $exam->status                   = $request['status'];
         $exam->published_at             = $request['published_at'];
@@ -155,6 +156,7 @@ class ExamController extends Controller
         $exam->items                    = $request['items'];
         $exam->content                  = $content ?? $exam->content;
         $exam->passing_grade            = $request['passing_grade'];
+        $exam->test_type                = $request['test_type'];
         $exam->display_student_score    = $request['display_student_score'];
         $exam->status                   = $request['status'];
         $exam->published_at             = $request['published_at'];
@@ -185,7 +187,15 @@ class ExamController extends Controller
 
     private function generateQuestions($exam)
     {
-        $content    = 'Write ' . $exam->items . ' questions with 4 multiple choice of a,b,c and d, and answer using this topic. ' . $exam->content;
+        set_time_limit(120);
+        if($exam->test_type == 1) {
+            $content    = 'Write ' . $exam->items . ' questions with 4 multiple choice of a,b,c and d, and answer using this topic. ' . $exam->content;
+        } else if($exam->test_type == 2) {
+            $content    = 'Write ' . $exam->items . ' questions answerable by True or False, and answer using this topic. ' . $exam->content . ' with a format, 1. "Question" - "True or False"';
+        } else if($exam->test_type == 3) {
+            $content    = 'Write ' . $exam->items . ' identification questions with one to three words answer using this topic. ' . $exam->content . ' with a format, 1. "Question" - "(answer)"';
+        }
+
         $result     = OpenAI::chat()->create([
             'model' => 'gpt-3.5-turbo',
             'messages' => [
@@ -199,28 +209,53 @@ class ExamController extends Controller
 
         $lines = explode("\n", $text);
 
-        foreach ($lines as $line) {
-            if (preg_match('/^\d+\./', $line)) {
-                if (!empty($current_question)) {
-                    $questions[] = $current_question;
+        if($exam->test_type == 1) {
+            foreach ($lines as $line) {
+                if (preg_match('/^\d+\./', $line)) {
+                    if (!empty($current_question)) {
+                        $questions[] = $current_question;
+                    }
+                    $current_question = ['question' => trim($line), 'options' => [], 'answer' => ''];
+                } elseif (preg_match('/^[a-d]\) .+/', $line)) {
+                    $current_question['options'][] = trim($line);
+                } elseif (preg_match('/^Answer:/', $line)) {
+                    $current_question['answer'] = trim(str_replace('Answer: ', '', $line));
                 }
-                $current_question = ['question' => trim($line), 'options' => [], 'answer' => ''];
-            } elseif (preg_match('/^[a-d]\) .+/', $line)) {
-                $current_question['options'][] = trim($line);
-            } elseif (preg_match('/^Answer:/', $line)) {
-                $current_question['answer'] = trim(str_replace('Answer: ', '', $line));
+            }
+
+            if (!empty($current_question)) {
+                $questions[] = $current_question;
             }
         }
 
-        if (!empty($current_question)) {
-            $questions[] = $current_question;
+        if($exam->test_type == 2) {
+            foreach ($lines as $line) {
+                if (preg_match('/^(?:\d+\.|Question \d+\.) (.+?) [\(\-] (True|False)[\)\s]*$/', $line, $matches)) {
+                    $questions[] = [
+                        'question'  => trim($matches[1]),
+                        'answer'    => $matches[2]
+                    ];
+                }
+            }
+        }
+
+        if($exam->test_type == 3) {
+            foreach ($lines as $line) {
+                // Adjusted regex to match the format of the lines
+                if (preg_match('/^\d+\.\s*(.+?)\s*-\s*(.+)$/', $line, $matches)) {
+                    $questions[] = [
+                        'question' => trim($matches[1]),
+                        'answer'   => trim($matches[2])
+                    ];
+                }
+            }
         }
 
         foreach ($questions as $item) {
             $questionaire = new ExamQuestion();
             $questionaire->exam_id  = $exam->id;
             $questionaire->question = $item['question'];
-            $questionaire->options  = implode(',', $item['options']);
+            $questionaire->options  = isset($item['options']) ? implode(',', $item['options']) : '';
             $questionaire->answer   = $item['answer'];
             $questionaire->save();
         }

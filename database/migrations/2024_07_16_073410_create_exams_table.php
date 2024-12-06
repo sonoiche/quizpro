@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('classroom_id');
             $table->bigInteger('items')->nullable()->default(10);
             $table->bigInteger('passing_grade')->nullable();
+            $table->integer('test_type')->nullable();
             $table->text('content')->nullable();
             $table->boolean('display_student_score')->nullable()->defautl(false);
             $table->enum('status', ['Published', 'Draft'])->nullable();

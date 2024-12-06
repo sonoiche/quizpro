@@ -4,6 +4,7 @@ namespace App\Models\Teacher;
 
 use App\Models\Student\ExamTaken;
 use App\Models\Teacher\Classroom;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -13,6 +14,7 @@ class Exam extends Model
 
     protected $table = "exams";
     protected $guarded = [];
+    protected $appends = ['created_date'];
 
     public function classroom()
     {
@@ -22,5 +24,14 @@ class Exam extends Model
     public function takens()
     {
         return $this->hasMany(ExamTaken::class, 'exam_id');
+    }
+
+    public function getCreatedDateAttribute()
+    {
+        if($this->created_at) {
+            return Carbon::parse($this->created_at)->format('d M, Y');
+        }
+
+        return '';
     }
 }

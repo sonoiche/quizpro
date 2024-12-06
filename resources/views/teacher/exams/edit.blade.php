@@ -44,22 +44,28 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="py-2">
-                                    <h6>{{ $question->question }}</h6>
+                                    <h6>{{ str_replace('"','', $question->question) }}</h6>
                                 </div>
                                 <div class="py-2 ml-5">
                                     @php
                                         $options = explode(',', $question->options);
                                         $results = [];
                                     @endphp
-                                    @foreach ($options as $option)
-                                        @if (preg_match('/([a-d])\) (.+)/', $option, $matches))
-                                            <?php $results[$matches[1]] = $matches[2]; ?>
-                                        @endif
-                                    @endforeach
+                                    @if(isset($question->options) && $question->options !== '' && is_array($options))
+                                        @foreach ($options as $option)
+                                            @if (preg_match('/([a-d])\) (.+)/', $option, $matches))
+                                                <?php $results[$matches[1]] = $matches[2]; ?>
+                                            @endif
+                                        @endforeach
 
-                                    @foreach ($results as $key => $result)
-                                        {!! $key . ') ' . $result . '<br>' !!}
-                                    @endforeach
+                                        @foreach ($results as $key => $result)
+                                            {!! $key . ') ' . $result . '<br>' !!}
+                                        @endforeach
+                                        <br>
+                                        Answer: <b>{{ $question->answer }}</b>
+                                    @else
+                                    Answer: <b>{{ $question->answer }}</b>
+                                    @endif
                                 </div>
                             </div>
                         </div>

@@ -19,6 +19,8 @@
                                         <th class="text-center">Score</th>
                                         <th class="text-center">Status</th>
                                         <th class="text-center">Date Taken</th>
+                                        <th class="text-center">Date Created</th>
+                                        <th class="text-center">Deadline</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -31,6 +33,8 @@
                                         <td class="text-center">{{ ($exam->takens_count != 0) ? $taken->displayScore(auth()->user()->student_number, $exam) : '' }}</td>
                                         <td class="text-center">{{ ($exam->takens_count != 0) ? $taken->displayStatus(auth()->user()->student_number, $exam) : '' }}</td>
                                         <td class="text-center">{{ ($exam->takens_count != 0) ? $exam->takens[0]->created_date : '' }}</td>
+                                        <td class="text-center">{{ $exam->created_date }}</td>
+                                        <td class="text-center">{{ $exam->deadline }}</td>
                                         <td class="text-center">
                                             @if($exam->takens_count == 0)
                                                 <a class="btn btn-primary" href="{{ url('student/exams', $exam->id) }}">

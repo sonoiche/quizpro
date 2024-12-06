@@ -23,7 +23,7 @@ class ExamRequest extends FormRequest
     {
         return [
             'name'              => 'required',
-            'items'             => 'required|numeric',
+            'items'             => 'required|numeric|max:50|min:5',
             'document_file'     => 'nullable|mimes:pdf,docx'
         ];
     }

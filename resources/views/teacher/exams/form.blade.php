@@ -4,13 +4,23 @@
         <input type="text" name="name" id="name" class="form-control rounded-1" value="{{ $exam->name ?? old('name') }}" />
     </div>
 </div>
-<div class="col-md-12 col-sm-12 mb-3">
+<div class="col-md-6 col-sm-12 mb-3">
     <div class="form-group">
         <label for="classroom_ids" class="form-label">Sections</label>
         <select class="form-select py-2" name="classroom_id" id="classroom_id">
             @foreach ($classrooms as $classroom)
             <option value="{{ $classroom->id }}" {{ (isset($exam->classroom_id) && $classroom->id == $exam->classroom_id) ? 'selected' : '' }}>{{ $classroom->section }}</option>
             @endforeach
+        </select>
+    </div>
+</div>
+<div class="col-md-6 col-sm-12 mb-3">
+    <div class="form-group">
+        <label for="test_type" class="form-label">Type of Test</label>
+        <select class="form-select py-2" name="test_type" id="test_type">
+            <option value="1" {{ (isset($exam->test_type) && 1 == $exam->test_type) ? 'selected' : '' }}>Multiple Choice</option>
+            <option value="2" {{ (isset($exam->test_type) && 2 == $exam->test_type) ? 'selected' : '' }}>True or False</option>
+            <option value="3" {{ (isset($exam->test_type) && 3 == $exam->test_type) ? 'selected' : '' }}>Identification</option>
         </select>
     </div>
 </div>
