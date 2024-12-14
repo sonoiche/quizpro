@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Student;
 
-use App\Http\Controllers\Controller;
-use App\Models\Student\ExamTaken;
-use App\Models\Teacher\Classroom;
+use Carbon\Carbon;
 use App\Models\Teacher\Exam;
 use Illuminate\Http\Request;
+use App\Models\Student\ExamTaken;
+use App\Models\Teacher\Classroom;
+use App\Http\Controllers\Controller;
 
 class ClassroomController extends Controller
 {
@@ -41,6 +42,7 @@ class ClassroomController extends Controller
      */
     public function show(string $id)
     {
+        $data['today']      = Carbon::now()->format('Y-m-d H:i:s');
         $data['classroom']  = Classroom::find($id);
         $data['taken']      = new ExamTaken();
         $data['exams']      = Exam::with(['takens' => function ($query) {

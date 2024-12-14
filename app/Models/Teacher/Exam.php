@@ -14,7 +14,7 @@ class Exam extends Model
 
     protected $table = "exams";
     protected $guarded = [];
-    protected $appends = ['created_date'];
+    protected $appends = ['created_date','deadline_date'];
 
     public function classroom()
     {
@@ -30,6 +30,15 @@ class Exam extends Model
     {
         if($this->created_at) {
             return Carbon::parse($this->created_at)->format('d M, Y');
+        }
+
+        return '';
+    }
+
+    public function getDeadlineDateAttribute()
+    {
+        if($this->deadline) {
+            return Carbon::parse($this->deadline)->format('d M, Y h:i A');
         }
 
         return '';

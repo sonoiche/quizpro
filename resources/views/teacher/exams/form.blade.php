@@ -28,7 +28,7 @@
     <div class="col-md-4 col-sm-12 mb-3">
         <div class="form-group">
             <label for="items" class="form-label">Number of Items</label>
-            <input type="number" name="items" id="items" class="form-control rounded-1" value="{{ $exam->items ?? old('items') }}" />
+            <input type="number" name="items" id="items" max="50" class="form-control rounded-1" value="{{ $exam->items ?? old('items') }}" />
         </div>
     </div>
     <div class="col-md-8 col-sm-12 mb-4">
@@ -45,7 +45,7 @@
     </div>
 </div>
 <div class="col-md-8 col-sm-12 mb-3">
-    <div class="d-flex align-items-center" style="height: 100px">
+    <div class="d-flex align-items-center" style="height: 50px; margin-top: 25px">
         <div class="form-check">
             <input class="form-check-input" name="display_student_score" type="checkbox" value="1" id="display_student_score" {{ ($exam->display_student_score) ? 'checked' : '' }} />
             <label class="form-check-label" for="display_student_score">
@@ -67,6 +67,12 @@
     <div class="form-group">
         <label for="published_at" class="form-label">Date to Publish</label>
         <input type="datetime-local" name="published_at" id="published_at" class="form-control rounded-1" value="{{ $exam->published_at ?? old('published_at') }}" min="{{ date('Y-m-d H:i:s') }}" />
+    </div>
+</div>
+<div class="col-md-6 col-sm-12 mb-4">
+    <div class="form-group">
+        <label for="deadline" class="form-label">Deadline</label>
+        <input type="datetime-local" name="deadline" id="deadline" class="form-control rounded-1" value="{{ $exam->deadline ?? old('deadline') }}" min="{{ date('Y-m-d H:i:s') }}" />
     </div>
 </div>
 @if(isset($exam->content))

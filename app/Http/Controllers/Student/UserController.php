@@ -20,7 +20,7 @@ class UserController extends Controller
     public function update(UserRequest $request, $id)
     {
         $student = User::find($id);
-        if(isset($request['password'])) {
+        if(isset($request['password']) && $request['password'] != '') {
             $student->password      = bcrypt($request['password']);
         }
         $student->contact_number    = $request['contact_number'];

@@ -9,6 +9,11 @@
                         <div class="card-title">{{ $exam->name }} - {{ $exam->items }} items</div>
                     </div>
                     <div class="card-body p-0">
+                        @session('error')
+                        <div class="alert alert-danger" role="alert" style="margin-top: 20px; width: 95%; margin: 0 auto">
+                            {{ session('error') }}
+                        </div>
+                        @endsession
                         <form action="{{ url('student/exams') }}" method="post">
                             @csrf
                             <div class="row">
@@ -27,15 +32,30 @@
                                                 <?php $results[$matches[1]] = $matches[2]; ?>
                                             @endif
                                         @endforeach
-    
-                                        @foreach ($results as $key => $result)
+                                        
+                                        @if ($exam->test_type === 2)
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="answer_{{ $question->id }}" id="answer_{{ $question->id.'_'.$key }}" value="{{ $key . ') ' . $result }}" />
-                                                <label class="form-check-label" for="answer_{{ $question->id.'_'.$key }}">
-                                                    {{ $key . ') ' . $result }}
-                                                </label>
+                                                <input class="form-check-input" type="radio" name="answer_{{ $question->id }}" id="true_{{ $question->id }}" value="True" />
+                                                <label class="form-check-label" for="true_{{ $question->id }}">True</label>
                                             </div>
-                                        @endforeach
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="answer_{{ $question->id }}" id="false_{{ $question->id }}" value="False" />
+                                                <label class="form-check-label" for="false_{{ $question->id }}">False</label>
+                                            </div>
+                                        @elseif($exam->test_type === 3)
+                                            <div class="form-group" style="width: 90%">
+                                                <input type="text" name="answer_{{ $question->id }}" id="answer_{{ $question->id }}" class="form-control" />
+                                            </div>
+                                        @else
+                                            @foreach ($results as $key => $result)
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="answer_{{ $question->id }}" id="answer_{{ $question->id.'_'.$key }}" value="{{ $key . ') ' . $result }}" />
+                                                    <label class="form-check-label" for="answer_{{ $question->id.'_'.$key }}">
+                                                        {{ $key . ') ' . $result }}
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        @endif
                                     </div>
                                 </div>
                                 @endforeach

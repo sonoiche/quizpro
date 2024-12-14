@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('display_student_score')->nullable()->defautl(false);
             $table->enum('status', ['Published', 'Draft'])->nullable();
             $table->timestamp('published_at')->nullable();
+            $table->dateTime('deadline')->nullable();
             $table->timestamps();
         });
     }

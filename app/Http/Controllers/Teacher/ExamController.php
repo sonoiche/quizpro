@@ -77,6 +77,7 @@ class ExamController extends Controller
         $exam->display_student_score    = $request['display_student_score'];
         $exam->status                   = $request['status'];
         $exam->published_at             = $request['published_at'];
+        $exam->deadline                 = $request['deadline'];
         $exam->save();
 
         return redirect()->to('teacher/exams/' . $exam->id . '/edit')->with('success', 'The examination has been uploaded.');
@@ -160,6 +161,7 @@ class ExamController extends Controller
         $exam->display_student_score    = $request['display_student_score'];
         $exam->status                   = $request['status'];
         $exam->published_at             = $request['published_at'];
+        $exam->deadline                 = $request['deadline'];
         $exam->save();
 
         if(isset($request['generate']) && isset($exam->content)) {

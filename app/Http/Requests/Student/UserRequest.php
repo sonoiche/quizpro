@@ -21,9 +21,10 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->input('id');
         return [
             'password'          => 'nullable|min:8|confirmed',
-            'student_number'    => 'required',
+            'student_number'    => 'required|unique:users,student_number,' . $id,
             'year_level'        => 'required',
             'section'           => 'required'
         ];

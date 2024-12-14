@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SectionRequest extends FormRequest
@@ -22,8 +23,14 @@ class SectionRequest extends FormRequest
     public function rules(): array
     {
         $id = $this->input('id');
+        $college_year = $this->input('college_year');
         return [
-            'name'          => 'required|unique:sections,name,'.(($id) ? $id : null).',id',
+            'name'          => [
+                'required',
+                Rule::unique('sections')->where(function ($query) use ($college_year) {
+                    return $query->where('college_year', $college_year);
+                })->ignore($id),
+            ],
             'college_year'  => 'required',
             'status'        => 'required'
         ];

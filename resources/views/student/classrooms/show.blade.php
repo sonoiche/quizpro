@@ -34,12 +34,22 @@
                                         <td class="text-center">{{ ($exam->takens_count != 0) ? $taken->displayStatus(auth()->user()->student_number, $exam) : '' }}</td>
                                         <td class="text-center">{{ ($exam->takens_count != 0) ? $exam->takens[0]->created_date : '' }}</td>
                                         <td class="text-center">{{ $exam->created_date }}</td>
-                                        <td class="text-center">{{ $exam->deadline }}</td>
                                         <td class="text-center">
-                                            @if($exam->takens_count == 0)
+                                            @if($exam->deadline < $today)
+                                            <span class="text-danger">{{ $exam->deadline_date }}</span>
+                                            @else
+                                            {{ $exam->deadline_date }}
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if($exam->takens_count == 0 && $exam->deadline >= $today)
                                                 <a class="btn btn-primary" href="{{ url('student/exams', $exam->id) }}">
                                                     Take Exam
                                                 </a>
+                                            @elseif($exam->deadline < $today)
+                                            <button class="btn btn-primary" disabled>
+                                                Take Exam
+                                            </button>
                                             @else
                                                 <button class="btn btn-primary" href="#" disabled>
                                                     Already Taken

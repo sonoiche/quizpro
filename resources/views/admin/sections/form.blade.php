@@ -1,7 +1,10 @@
 <div class="col-md-12 col-sm-12 mb-3">
     <div class="form-group">
         <label for="name" class="form-label">Section Name</label>
-        <input type="text" name="name" id="name" class="form-control rounded-1" value="{{ $section->name ?? '' }}" />
+        <input type="text" name="name" id="name" class="form-control rounded-1 @error('name') is-invalid @enderror" value="{{ $section->name ?? old('name') }}" />
+        @error('name')
+        <div id="name-error" class="invalid-feedback">{{ $message }}</div>
+        @enderror
     </div>
 </div>
 <div class="col-md-6 col-sm-12 mb-3">
