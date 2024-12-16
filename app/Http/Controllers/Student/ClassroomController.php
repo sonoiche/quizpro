@@ -42,7 +42,7 @@ class ClassroomController extends Controller
      */
     public function show(string $id)
     {
-        $data['today']      = Carbon::now()->format('Y-m-d H:i:s');
+        $data['today']      = $today = Carbon::now()->format('Y-m-d H:i:s');
         $data['classroom']  = Classroom::find($id);
         $data['taken']      = new ExamTaken();
         $data['exams']      = Exam::with(['takens' => function ($query) {
@@ -52,6 +52,7 @@ class ClassroomController extends Controller
                 $query->where('student_number', auth()->user()->student_number);
             }])
             ->where('classroom_id', $id)
+            ->where('published_at','<=',$today)
             ->get();
 
         return view('student.classrooms.show', $data);

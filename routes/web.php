@@ -12,7 +12,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['student.validation'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth:web'])->group(function () {
     Route::prefix('admin')->middleware('can:admin-only')->group(function () {

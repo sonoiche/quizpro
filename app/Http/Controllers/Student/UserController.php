@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Student\UserRequest;
 use App\Models\Admin\Section;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
