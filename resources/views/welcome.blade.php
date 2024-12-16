@@ -54,7 +54,7 @@
                         <div class="grid grid-cols-12 h-fit">
                             <div class="col-span-6 flex flex-col items-center justify-center">
                                 <div class="text-center">
-                                    <h3 class="text-5xl text-gray-950 font-semibold">Saint Columbian Subject Question Crafting System</h3>
+                                    <h3 class="text-5xl text-gray-950 font-semibold">Saint Columban Subject Question Crafting System</h3>
                                     <div class="my-12">
                                         <h4 class="text-3xl text-gray-800 font-medium italic">Innovative Tool for Syncing Questions and Elevating Learning Assessment</h4>
                                     </div>
