@@ -24,17 +24,10 @@ class ExamDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->editColumn('classroom_ids', function (Exam $exam) {
-                if(isset($exam->classroom_ids)) {
-                    $section_ids = explode(',', $exam->classroom_ids);
-                    $content     = '';
-                    $sections    = Section::whereIn('id', $section_ids)
-                        ->where('status', 'Enable')
-                        ->get();
-                    foreach ($sections as $section) {
-                        $content .= $section->name . ', ';
-                    }
-                    return substr($content, 0, -2);
+            ->editColumn('classroom_id', function (Exam $exam) {
+                if(isset($exam->classroom_id)) {
+                    $classroom = Classroom::find($exam->classroom_id);
+                    return $classroom->section;
                 }
 
                 return '';
@@ -84,7 +77,7 @@ class ExamDataTable extends DataTable
         return [
             Column::make(['data' => 'created_at', 'title' => 'Date Created']),
             Column::make(['data' => 'name', 'title' => 'Title']),
-            Column::make(['data' => 'classroom_ids', 'title' => 'Section / Block']),
+            Column::make(['data' => 'classroom_id', 'title' => 'Section / Block']),
             Column::make(['data' => 'items', 'title' => 'Number of Items'])
                 ->addClass('text-center')
                 ->sortable(false)
