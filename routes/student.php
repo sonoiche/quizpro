@@ -12,5 +12,6 @@ Route::prefix('student')->middleware(['student_validation'])->group(function () 
 });
 
 Route::prefix('student')->group(function () {
+    Route::get('accounts/{year_level}', [UserController::class, 'show']);
     Route::put('accounts/{id}', [UserController::class, 'update']);
 });

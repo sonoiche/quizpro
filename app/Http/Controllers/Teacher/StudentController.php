@@ -17,8 +17,10 @@ class StudentController extends Controller
     public function index()
     {
         $user_id            = auth()->user()->id;
-        $data['students']   = User::where('role', User::ROLE_STUDENT)->orderBy('fname')->get();
         $data['sections']   = Classroom::where('instructor_id', $user_id)->orderBy('name')->get();
+        $sections           = Classroom::where('instructor_id', $user_id)->pluck('section');
+        $data['students']   = User::where('role', User::ROLE_STUDENT)
+            ->whereIn('section', $sections)->orderBy('fname')->get();
         return view('teacher.students.index', $data);
     }
 
@@ -58,8 +60,8 @@ class StudentController extends Controller
     public function edit(string $id)
     {
         $user_id            = auth()->user()->id;
-        $data['students']   = User::where('role', User::ROLE_STUDENT)->orderBy('fname')->get();
         $data['classroom']  = Classroom::where('instructor_id', $user_id)->where('section', $id)->orderBy('name')->first();
+        $data['students']   = User::where('role', User::ROLE_STUDENT)->where('section', $id)->orderBy('fname')->get();
         return view('teacher.students.index', $data);
     }
 
